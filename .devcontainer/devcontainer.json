@@ -1,0 +1,35 @@
+{
+	"image": "mcr.microsoft.com/devcontainers/universal:5.0.2",
+	"features": {
+		"ghcr.io/devcontainers-extra/features/packer-asdf:2": {},
+		"ghcr.io/devcontainers-extra/features/terraform-asdf:2": {},
+		"ghcr.io/devcontainers/features/aws-cli:1": {},
+		"ghcr.io/devcontainers-extra/features/ansible:2": {}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"hashicorp.terraform",
+				"-github.copilot-chat"
+			],
+			"settings": {
+				"chat.disableAIFeatures": true,
+				"github.copilot.enable": {
+					"*": false
+				},
+				"github.copilot.inlineSuggest.enable": false,
+				"chat.commandCenter.enabled": false,
+				"extensions": {
+					"ignoreRecommendations": true
+				},
+				"terminal.integrated.suggest.enabled": false,
+				"workbench.colorTheme": "Quiet Light",
+				"editor.bracketPairColorization.enabled": true,
+				"editor.mouseWheelZoom": true,
+				"editor.fontSize": 20,
+				"terminal.integrated.fontSize": 20,
+				"editor.formatOnSave": true
+			}
+		}
+	}
+}
