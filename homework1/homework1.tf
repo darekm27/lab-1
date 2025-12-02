@@ -2,7 +2,6 @@ variable "a" {
   type = number
 }
 
-
 variable "b" {
   type = number
   validation {
@@ -14,8 +13,8 @@ variable "b" {
 variable "operand" {
   type = string
   validation {
-    condition = var.operand == "+" || var.operand == "-" || var.operand == "*" || var.operand == "/"
-    error_message = "Operand must be one of '+','-','*','/' "
+    condition = contains(local.operators, var.operand)
+    error_message = "Operand must be one of: '${join("','", local.operators)}'"
   }
 }
 
@@ -26,6 +25,7 @@ locals {
     "*" = var.a * var.b
     "/" = var.a / var.b
   }
+  operators = ["+", "-", "*", "/"]
 }
 
 output "result" {
