@@ -6,6 +6,16 @@ locals {
   minNumberOfServers = 1
   maxNumberOfServers = 10
 }
+
+locals {
+  countOfItesm = {
+    disks = 13
+    servers = 22
+    max = local.maxNumberOfServers
+  }
+}
+
+
 variable "number-of-servers" {
   type        = number
   description = "Required number of servers"
@@ -36,4 +46,8 @@ output "number-resources" {
 
 output "list-of-names" {
   value = "${join(", ",var.list-of-names)}"
+}
+
+output "name" {
+  value = lookup(local.countOfItesm, max)
 }
