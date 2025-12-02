@@ -7,14 +7,33 @@ locals {
   maxNumberOfServers = 10
 }
 variable "number-of-servers" {
-  type = number
+  type        = number
   description = "Required number of servers"
+  default     = 2
   validation {
-    condition = var.number-of-servers >= local.minNumberOfServers && var.number-of-servers <= local.maxNumberOfServers
+    condition     = var.number-of-servers >= local.minNumberOfServers && var.number-of-servers <= local.maxNumberOfServers
     error_message = "Number of servers must be in range ${local.minNumberOfServers} - ${local.maxNumberOfServers}"
   }
 }
+variable "list-of-names" {
+  type = list(string)
+  description = "List of names"
+}
 
-output "output" {
-  value = var.server-name
+variable "number-of-disks" {
+  type = number
+  description = "Number of disks"
+  default = 1
+}
+
+output "result" {
+  value = "${var.server-name} x ${var.number-of-servers}"
+}
+
+output "number-resources" {
+  value = var.number-of-disks * var.number-of-servers
+}
+
+output "list-of-names" {
+  value = "${join(", ",var.list-of-names)}"
 }
