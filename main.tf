@@ -2,6 +2,12 @@ variable "server-name" {
   type        = string
   description = "Name of server to provision"
 }
+
+variable "password" {
+  type = string
+  sensitive = true
+}
+
 locals {
   minNumberOfServers = 1
   maxNumberOfServers = 10
@@ -13,6 +19,7 @@ locals {
     servers = 22
     max = local.maxNumberOfServers
   }
+  pwd = var.password
 }
 
 
@@ -50,4 +57,8 @@ output "list-of-names" {
 
 output "name" {
   value = lookup(local.countOfItesm, max)
+}
+
+output "pasword" {
+  value = local.pwd
 }
