@@ -9,8 +9,17 @@ terraform {
 
 provider "aws" {
   # Configuration options
+  # Tags not to touch during apply
+  ignore_tags {
+    keys = var.tags_to_ignore
+  }
 }
 
+variable "tags_to_ignore" {
+  type = list(string)
+  default = [ "department" ]
+  
+}
 # Global public access switch
 variable "is_public" {
   type = bool
