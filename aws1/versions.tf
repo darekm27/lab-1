@@ -8,9 +8,6 @@ terraform {
   }
 
   backend "s3" {
-    bucket       = "awsninja5-state"
-    key          = "state"
-    region       = "us-east-1"
     use_lockfile = true
   }
 }
