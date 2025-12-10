@@ -19,7 +19,7 @@ resource "aws_s3_object" "object" {
 }
 
 resource "aws_s3_bucket_public_access_block" "allow_public_access" {
-  count = var.is_public ? 1 : 0
+  count                   = var.is_public ? 1 : 0
   bucket                  = aws_s3_bucket.my-bucket.id
   block_public_acls       = false
   ignore_public_acls      = false
@@ -28,7 +28,7 @@ resource "aws_s3_bucket_public_access_block" "allow_public_access" {
 
 }
 resource "aws_s3_bucket_policy" "allow_public_access" {
-  count = var.is_public ? 1 : 0
+  count      = var.is_public ? 1 : 0
   bucket     = aws_s3_bucket.my-bucket.id
   policy     = data.aws_iam_policy_document.allow_public_access.json
   depends_on = [aws_s3_bucket_public_access_block.allow_public_access]
