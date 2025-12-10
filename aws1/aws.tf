@@ -26,7 +26,37 @@ resource "aws_s3_object" "object" {
   source   = "messages/${each.key}"
 }
 
-# Input - Bucket prefix jako zmienna + domyślnie Twój
-# Input - Tagi, gdzie domyślnie jest w variable "purpose": "learning" (może byc nadpisane)
-# Zawsze dodany tag "owner" (do bucketu lub wszędzie (default tags))
-# Output: bucket ARN i Url
+resource "aws_s3_bucket_public_access_block" "allow_public_access" {
+  bucket                  = aws_s3_bucket.my-bucket.id
+  block_public_acls       = false
+  ignore_public_acls      = false
+  block_public_policy     = false
+  restrict_public_buckets = false
+
+}
+resource "aws_s3_bucket_policy" "allow_public_access" {
+  bucket     = aws_s3_bucket.my-bucket.id
+  policy     = data.aws_iam_policy_document.allow_public_access.json
+  depends_on = [aws_s3_bucket_public_access_block.allow_public_access]
+}
+
+data "aws_iam_policy_document" "allow_public_access" {
+  statement {
+    sid    = "PublicReadGetObject"
+    effect = "Allow"
+    principals {
+      identifiers = ["*"]
+      type        = "*"
+    }
+
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket",
+    ]
+
+    resources = [
+      aws_s3_bucket.my-bucket.arn,
+      "${aws_s3_bucket.my-bucket.arn}/*",
+    ]
+  }
+}
